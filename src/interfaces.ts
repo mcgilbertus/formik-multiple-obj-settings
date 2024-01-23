@@ -1,8 +1,12 @@
+export interface IParams {
+  [key: string]: any
+}
+
 export interface IStep {
   id: number
+  toolType: number
   name: string
-  ed1: string
-  filePath: string
+  params: IParams
 }
 
 export interface IWorkflow {
