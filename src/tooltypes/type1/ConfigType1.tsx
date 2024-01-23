@@ -1,6 +1,6 @@
 import {useFormik} from "formik";
-import {IStep} from "./interfaces.ts";
-import {ToolType1Schema} from "./ValidationSchema.ts";
+import {IStep} from "../../interfaces.ts";
+import {ToolType1Schema} from "./ValidationType1.ts";
 import * as Yup from "yup";
 
 interface IConfigProps {
@@ -8,7 +8,7 @@ interface IConfigProps {
   handleUpdateParams: (params: IStep) => void
 }
 
-export function ConfigComponent({configParams, handleUpdateParams}: IConfigProps) {
+export function ConfigType1({configParams, handleUpdateParams}: IConfigProps) {
 
   const formik = useFormik({
     initialValues: configParams,
@@ -53,10 +53,10 @@ export function ConfigComponent({configParams, handleUpdateParams}: IConfigProps
         )}
       </div>
       <div className="mt-2">
-        <input name="ed2" type="text" className="form-control" value={formik.values.ed2}
+        <input name="filePath" type="text" className="form-control" value={formik.values.filePath}
                onChange={handleChange} onBlur={handleBlur}/>
-        {formik.errors.ed2 && (
-          <div className="text-danger">{formik.errors.ed2}</div>
+        {formik.errors.filePath && (
+          <div className="text-danger">{formik.errors.filePath}</div>
         )}
       </div>
       <div>

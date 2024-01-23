@@ -6,9 +6,9 @@ export const selectedToolAtom = atom<number>(0)
 
 export const actualWorkflowAtom = atom<IWorkflow>({
   steps: [
-    {id: 1, name: 'tool1', ed1: 'config1ed1', ed2: 'config1ed2'},
-    {id: 2, name: 'tool2', ed1: 'config2ed1', ed2: 'config2ed2'},
-    {id: 3, name: 'tool3', ed1: 'config3ed1', ed2: 'config3ed2'},
+    {id: 1, name: 'tool1', ed1: 'config1ed1', filePath: 'one.txt'},
+    {id: 2, name: 'tool2', ed1: 'config2ed1', filePath: 'two.xml'},
+    {id: 3, name: 'tool3', ed1: 'config3ed1', filePath: ''},
   ]
 })
 

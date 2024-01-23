@@ -2,7 +2,7 @@ export interface IStep {
   id: number
   name: string
   ed1: string
-  ed2: string
+  filePath: string
 }
 
 export interface IWorkflow {

@@ -1,5 +1,5 @@
 import {BuilderComponent} from "./BuilderComponent.tsx";
-import {ConfigComponent} from "./ConfigComponent.tsx";
+import {ConfigType1} from "./tooltypes/type1/ConfigType1.tsx";
 import {useAtom, useAtomValue} from "jotai";
 import {actualWorkflowAtom, selectedParamsAtom, selectedToolAtom} from "./atoms.ts";
 import {IStep} from "./interfaces.ts";
@@ -28,7 +28,7 @@ function App() {
         <div className="col-5">
           <h1>Config</h1>
           <div>Selected: {actualTool}</div>
-          <ConfigComponent configParams={actualParams} handleUpdateParams={updateParamsHandler}/>
+          <ConfigType1 configParams={actualParams} handleUpdateParams={updateParamsHandler}/>
         </div>
       </div>
     </div>
