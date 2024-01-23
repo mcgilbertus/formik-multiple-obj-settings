@@ -1,14 +1,14 @@
 import {useFormik} from "formik";
-import {IStep} from "./interfaces.ts";
-import {ToolType1Schema} from "./ValidationSchema.ts";
+import {IParams} from "../../interfaces.ts";
+import {ToolType1Schema} from "./validation.ts";
 import * as Yup from "yup";
 
 interface IConfigProps {
-  configParams: IStep,
-  handleUpdateParams: (params: IStep) => void
+  configParams: IParams,
+  handleUpdateParams: (params: IParams) => void
 }
 
-export function ConfigComponent({configParams, handleUpdateParams}: IConfigProps) {
+export function ConfigType1({configParams, handleUpdateParams}: IConfigProps) {
 
   const formik = useFormik({
     initialValues: configParams,
@@ -16,10 +16,7 @@ export function ConfigComponent({configParams, handleUpdateParams}: IConfigProps
     enableReinitialize: true,
     validateOnMount: true,
     validateOnBlur: true,
-    onSubmit: values => {
-      alert(JSON.stringify(values, null, 2));
-      handleUpdateParams(values)
-    },
+    onSubmit: () => {},
   });
 
   const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,31 +29,36 @@ export function ConfigComponent({configParams, handleUpdateParams}: IConfigProps
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('handleChange', e.target.name, e.target.value)
     formik.setFieldTouched(e.target.name, true, true)
     formik.handleChange(e)
   }
 
   return (
     <>
+      <h3>ToolType1 parameters</h3>
       <div>
-        <input name="name" type="text" className="form-control" value={formik.values.name}
+        Param1
+        <input name="param1" type="text" className="form-control" value={formik.values['param1']}
                onChange={handleChange} onBlur={handleBlur}/>
-        {formik.errors.name && (
-          <div className="text-danger">{formik.errors.name}</div>
+        {formik.errors['param1'] && (
+          <div className="text-danger">{formik.errors['param1']}</div>
         )}
       </div>
       <div className="mt-2">
-        <input name="ed1" type="text" className="form-control" value={formik.values.ed1}
+        ed1
+        <input name="ed1" type="text" className="form-control" value={formik.values['ed1']}
                onChange={handleChange} onBlur={handleBlur}/>
-        {formik.errors.ed1 && (
-          <div className="text-danger">{formik.errors.ed1}</div>
+        {formik.errors['ed1'] && (
+          <div className="text-danger">{formik.errors['ed1']}</div>
         )}
       </div>
       <div className="mt-2">
-        <input name="ed2" type="text" className="form-control" value={formik.values.ed2}
+        filePath
+        <input name="filePath" type="text" className="form-control" value={formik.values.filePath}
                onChange={handleChange} onBlur={handleBlur}/>
-        {formik.errors.ed2 && (
-          <div className="text-danger">{formik.errors.ed2}</div>
+        {formik.errors.filePath && (
+          <div className="text-danger">{formik.errors.filePath}</div>
         )}
       </div>
       <div>
