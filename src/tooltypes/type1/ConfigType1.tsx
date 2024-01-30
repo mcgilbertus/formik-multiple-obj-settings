@@ -12,9 +12,9 @@ export function ConfigType1() {
   const formik = useFormik({
     initialValues: selectedStep.params,
     initialTouched: selectedStep.touched,
+    initialErrors: selectedStep.errors,
     validationSchema: Yup.object().shape(ToolType1Schema()),
     enableReinitialize: true,
-    validateOnMount: true,
     onSubmit: () => {},
   });
 
@@ -23,6 +23,7 @@ export function ConfigType1() {
     setSelectedStep({
       ...selectedStep,
       touched: formik.touched,
+      errors: formik.errors,
       params: {...formik.values, [e.target.name]: e.target.value}
     })
   }

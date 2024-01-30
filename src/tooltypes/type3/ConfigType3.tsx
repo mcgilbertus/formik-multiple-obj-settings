@@ -2,7 +2,7 @@ import {useFormik} from "formik";
 import {ToolType3Schema} from "./validation.ts";
 import * as Yup from "yup";
 import {useAtom} from "jotai/index";
-import {selectedParamsAtom, selectedStepAtom} from "../../atoms.ts";
+import {selectedStepAtom} from "../../atoms.ts";
 import {DisplayFormikState} from "../type2/display-formik-state.tsx";
 
 
@@ -13,9 +13,9 @@ export function ConfigType3() {
   const formik = useFormik({
     initialValues: selectedStep.params,
     initialTouched: selectedStep.touched,
+    initialErrors: selectedStep.errors,
     validationSchema: Yup.object().shape(ToolType3Schema()),
     enableReinitialize: true,
-    validateOnMount: true,
     onSubmit: () => {},
   });
 
@@ -24,6 +24,7 @@ export function ConfigType3() {
     setSelectedStep({
       ...selectedStep,
       touched: formik.touched,
+      errors: formik.errors,
       params: {...formik.values, [e.target.name]: e.target.value}
     })
   }

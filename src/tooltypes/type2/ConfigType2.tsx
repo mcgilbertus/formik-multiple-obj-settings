@@ -15,8 +15,8 @@ export function ConfigType2() {
     initialValues: selectedStep.params,
     validationSchema: Yup.object().shape(ToolType2Schema()),
     initialTouched: selectedStep.touched,
+    initialErrors: selectedStep.errors,
     enableReinitialize: true,
-    validateOnMount: true,
     onSubmit: () => {
     },
   });
@@ -26,6 +26,7 @@ export function ConfigType2() {
     setSelectedStep({
       ...selectedStep,
       touched: formik.touched,
+      errors: formik.errors,
       params: {...formik.values, [e.target.name]: e.target.value}
     })
   }
