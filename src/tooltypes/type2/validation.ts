@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 
 export const ToolType2Schema = () => ({
-  name: Yup.string().required('Name is required'),
+  param2: Yup.string().required('param2 is required'),
   ed1: Yup.string().required('ed1 is required').max(10, 'ed1 can only be up to 10 characters.'),
   filePath: Yup.string()
     .trim()

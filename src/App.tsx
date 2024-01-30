@@ -1,5 +1,4 @@
-import {useAtom, useAtomValue} from "jotai";
-import {IParams} from "./interfaces.ts";
+import {useAtomValue, useSetAtom} from "jotai";
 import {actualWorkflowAtom, selectedStepAtom, actualStepNumberAtom} from "./atoms.ts";
 import {BuilderComponent} from "./BuilderComponent.tsx";
 import {ConfigType1} from "./tooltypes/type1/ConfigType1.tsx";
@@ -9,12 +8,8 @@ import {ConfigType3} from "./tooltypes/type3/ConfigType3.tsx";
 function App() {
 
   const actualWorkflow = useAtomValue(actualWorkflowAtom)
-  const [actualStep, setActualStep] = useAtom(selectedStepAtom)
-  const [actualStepNumber, setActualStepNumber] = useAtom(actualStepNumberAtom)
-
-  const updateParamsHandler = (params:IParams) => {
-    setActualStep({...actualStep, params: params})
-  }
+  const actualStep = useAtomValue(selectedStepAtom)
+  const setActualStepNumber = useSetAtom(actualStepNumberAtom)
 
   const updateSelectedHandler = (selected:number) => {
     setActualStepNumber(selected-1)
@@ -23,11 +18,11 @@ function App() {
   const actualStepParams = () => {
     switch (actualStep.toolType) {
       case 1:
-        return <ConfigType1 configParams={actualStep.params} handleUpdateParams={updateParamsHandler}/>
+        return <ConfigType1 />
       case 2:
-        return <ConfigType2 configParams={actualStep.params} handleUpdateParams={updateParamsHandler}/>
+        return <ConfigType2 toolId={actualStep.id}/>
       case 3:
-        return <ConfigType3 configParams={actualStep.params} handleUpdateParams={updateParamsHandler}/>
+        return <ConfigType3 />
       default:
         return <div>ToolType {actualStep.toolType} not implemented</div>
     }
@@ -42,7 +37,7 @@ function App() {
         </div>
         <div className="col-5">
           <h1>Config</h1>
-          <div>Selected: {actualStepNumber}</div>
+          <div>Selected: {actualStep.name}</div>
           {actualStepParams()}
         </div>
       </div>

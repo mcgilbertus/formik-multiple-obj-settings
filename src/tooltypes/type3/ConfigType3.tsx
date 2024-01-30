@@ -1,34 +1,31 @@
 import {useFormik} from "formik";
-import {IParams} from "../../interfaces.ts";
 import {ToolType3Schema} from "./validation.ts";
 import * as Yup from "yup";
+import {useAtom} from "jotai/index";
+import {selectedParamsAtom, selectedStepAtom} from "../../atoms.ts";
+import {DisplayFormikState} from "../type2/display-formik-state.tsx";
 
-interface IConfigProps {
-  configParams: IParams,
-  handleUpdateParams: (params: IParams) => void
-}
 
-export function ConfigType3({configParams, handleUpdateParams}: IConfigProps) {
+export function ConfigType3() {
+
+  const [selectedStep, setSelectedStep] = useAtom(selectedStepAtom)
 
   const formik = useFormik({
-    initialValues: configParams,
+    initialValues: selectedStep.params,
+    initialTouched: selectedStep.touched,
     validationSchema: Yup.object().shape(ToolType3Schema()),
     enableReinitialize: true,
     validateOnMount: true,
-    validateOnBlur: true,
-    onSubmit: values => {
-      alert(JSON.stringify(values, null, 2));
-      handleUpdateParams(values)
-    },
+    onSubmit: () => {},
   });
 
-  const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    handleUpdateParams({...formik.values, [e.target.name]: e.target.value})
-  };
-
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    formik.handleBlur(e)
-    handleTextChange(e)
+    formik.setFieldTouched(e.target.name, true, true)
+    setSelectedStep({
+      ...selectedStep,
+      touched: formik.touched,
+      params: {...formik.values, [e.target.name]: e.target.value}
+    })
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,7 +41,7 @@ export function ConfigType3({configParams, handleUpdateParams}: IConfigProps) {
         Param3
         <input name="param3" type="text" className="form-control" value={formik.values.param3}
                onChange={handleChange} onBlur={handleBlur}/>
-        {formik.errors.param3 && (
+        {formik.errors.param3 && formik.touched.param3 && (
           <div className="text-danger">{formik.errors.param3}</div>
         )}
       </div>
@@ -52,14 +49,12 @@ export function ConfigType3({configParams, handleUpdateParams}: IConfigProps) {
         ed1
         <input name="ed1" type="text" className="form-control" value={formik.values.ed1}
                onChange={handleChange} onBlur={handleBlur}/>
-        {formik.errors.ed1 && (
+        {formik.errors.ed1 && formik.touched.ed1 && (
           <div className="text-danger">{formik.errors.ed1}</div>
         )}
       </div>
-      <div>
-        <div>Values: {JSON.stringify(formik.values)}</div>
-        <div>Errors: {JSON.stringify(formik.errors)}</div>
-        <div>Touched: {JSON.stringify(formik.touched)}</div>
+      <div className="mt-4">
+        <DisplayFormikState formik={formik} />
       </div>
     </>
   )
